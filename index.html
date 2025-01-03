@@ -29,12 +29,12 @@
         message = "innocent";
         cw = codeword;
       }
-      setTimeout(fridge, (i - 1) * 4000, i);
+      setTimeout(fridge, (i - 1) * 4000, i, cw, message);
     }
   }
-  function fridge(gg) {
-        document.getElementById("i").innerHTML = "player ".concat(gg.toString(), " is ", message);
-        document.getElementById("codeword").innerHTML = cw;
+  function fridge(gg, cw2, message2) {
+        document.getElementById("i").innerHTML = "player ".concat(gg.toString(), " is ", message2);
+        document.getElementById("codeword").innerHTML = cw2;
         setTimeout(function() {
         document.getElementById("i").innerHTML = "";
         document.getElementById("codeword").innerHTML = "";
