@@ -1,0 +1,42 @@
+<input id="input" placeholder="number of people">
+<button onclick="givepeople()">Start the game idiot</button>
+
+<h1 id="i"></h1>
+<h2 id="codeword"></h2>
+
+<script>
+  function givepeople() {
+    impostor = parseInt(Math.random() * parseInt(document.getElementById("input").value)) + 1;
+    words = [
+  "apple", "banana", "carrot", "broccoli", "chicken", 
+  "pizza", "burger", "sushi", "pasta", "steak", 
+  "taco", "salad", "sandwich", "pancake", "waffle", 
+  "orange", "grape", "strawberry", "blueberry", "watermelon", 
+  "mango", "kiwi", "pear", "peach", "plum", 
+  "avocado", "tomato", "onion", "garlic", "cucumber", 
+  "spinach", "cheese", "yogurt", "milk", "egg", 
+  "ice cream", "chocolate", "cookies", "cake", "cupcake", 
+  "pie", "donut", "popcorn", "chips", "fries", 
+  "noodles", "rice", "toast", "bagel", "cereal",
+  "bacon", "pudding", "lasagna"
+  ];
+    codeword = words[parseInt(Math.random() * 50)];
+    for (i = 1; i < parseInt(document.getElementById("input").value) + 1; i++) {
+      if (impostor == i) {
+        message = "impostor";
+        cw = "";
+      } else {
+        message = "innocent";
+        cw = codeword;
+      }
+      setTimeout(function() {
+        document.getElementById("i").innerHTML = "player " + i.toString() + " is " + message;
+        document.getElementById("codeword").innerHTML = cw;
+        setTimeout(function() {
+        document.getElementById("i").innerHTML = "";
+        document.getElementById("codeword").innerHTML = "";
+        }, (i - 1) * 3000);
+      }, (i - 1) * 4000);
+    }
+  }
+</script>
