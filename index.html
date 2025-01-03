@@ -29,14 +29,15 @@
         message = "innocent";
         cw = codeword;
       }
-      setTimeout(function() {
-        document.getElementById("i").innerHTML = "player ".concat(i.toString(), " is ", message);
+      setTimeout(fridge, (i - 1) * 4000), i);
+    }
+  }
+  function fridge(gg) {
+        document.getElementById("i").innerHTML = "player ".concat(gg.toString(), " is ", message);
         document.getElementById("codeword").innerHTML = cw;
         setTimeout(function() {
         document.getElementById("i").innerHTML = "";
         document.getElementById("codeword").innerHTML = "";
-        }, i * 3000);
-      }, (i - 1) * 4000);
-    }
+        }, gg * 3000);
   }
 </script>
