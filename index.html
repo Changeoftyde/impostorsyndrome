@@ -30,12 +30,12 @@
         cw = codeword;
       }
       setTimeout(function() {
-        document.getElementById("i").innerHTML = "player " + i.toString() + " is " + message;
+        document.getElementById("i").innerHTML = "player ".concat(i.toString(), " is ", message);
         document.getElementById("codeword").innerHTML = cw;
         setTimeout(function() {
         document.getElementById("i").innerHTML = "";
         document.getElementById("codeword").innerHTML = "";
-        }, (i - 1) * 3000);
+        }, i * 3000);
       }, (i - 1) * 4000);
     }
   }
