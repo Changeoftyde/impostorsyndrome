@@ -1,5 +1,5 @@
 <input id="input" placeholder="number of people">
-<button onclick="givepeople()">Start the game idiot</button>
+<button onclick="givepeople()">Start the game</button>
 
 <h1 id="i"></h1>
 <h2 id="codeword"></h2>
@@ -29,7 +29,7 @@
         message = "innocent";
         cw = codeword;
       }
-      setTimeout(fridge, (i - 1) * 4000, i, cw, message);
+      setTimeout(fridge, (i - 1) * 7500, i, cw, message);
     }
   }
   function fridge(gg, cw2, message2) {
@@ -38,6 +38,6 @@
         setTimeout(function() {
         document.getElementById("i").innerHTML = "";
         document.getElementById("codeword").innerHTML = "";
-        }, gg * 3000 + ((gg - 1) * 1000));
+        }, 5000);
   }
 </script>
