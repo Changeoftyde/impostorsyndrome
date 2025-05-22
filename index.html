@@ -126,6 +126,10 @@ randomNum = parseInt(Math.random() * 50);
       setTimeout(fridge, (i - 1) * 7500, i, cw, message);
     }
   }
+  setTimeout(function() {
+    document.getElementById("i").innerHTML = "";
+    document.getElementById("codeword").innerHTML = codeword;
+  }, 5000 + parseInt(document.getElementById("input").value) * 12000);
   function fridge(gg, cw2, message2) {
         document.getElementById("i").innerHTML = "player ".concat(gg.toString(), " is ", message2);
         document.getElementById("codeword").innerHTML = cw2;
