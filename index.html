@@ -1,3 +1,4 @@
+<body id="body"></body>
 <input id="input" placeholder="number of people">
 <button onclick="givepeople()">Start the game</button>
 
@@ -118,9 +119,11 @@ randomNum = parseInt(Math.random() * 50);
     for (i = 1; i < parseInt(document.getElementById("input").value) + 1; i++) {
       if (impostor == i) {
         message = "impostor";
+        document.getElementById("body").style.backgroundColor = "tomato";
         cw = falseword;
       } else {
         message = "innocent";
+        document.getElementById("body").style.backgroundColor = "MediumSeaGreen";
         cw = codeword;
       }
       setTimeout(fridge, (i - 1) * 7500, i, cw, message);
@@ -129,6 +132,7 @@ randomNum = parseInt(Math.random() * 50);
   setTimeout(function() {
     document.getElementById("i").innerHTML = "";
     document.getElementById("codeword").innerHTML = codeword;
+            document.getElementById("body").style.backgroundColor = "white";
   }, 5000 + parseInt(document.getElementById("input").value) * 12000);
   function fridge(gg, cw2, message2) {
         document.getElementById("i").innerHTML = "player ".concat(gg.toString(), " is ", message2);
@@ -136,6 +140,7 @@ randomNum = parseInt(Math.random() * 50);
         setTimeout(function() {
         document.getElementById("i").innerHTML = "";
         document.getElementById("codeword").innerHTML = "";
+        document.getElementById("body").style.backgroundColor = "white";
         }, 5000);
   }
 </script>
