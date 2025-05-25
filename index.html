@@ -141,6 +141,9 @@ randomNum = parseInt(Math.random() * 50);
         document.getElementById("i").innerHTML = "";
         document.getElementById("codeword").innerHTML = "";
         document.getElementById("body").style.backgroundColor = "white";
+        if (i == parseInt(document.getElementById("input").value)) {
+                document.getElementById("codeword").innerHTML = codeword;
+        }
         }, 5000);
   }
 </script>
