@@ -1,150 +1,536 @@
-<body id="body"></body>
-<input id="input" placeholder="number of people">
-<button onclick="givepeople()">Start the game</button>
-
-<h1 id="i"></h1>
-<h2 id="codeword"></h2>
-
+<body>
+  <div id="startpage">
+  <select id="categories">
+    <option value="animals">Animals</option>
+    <option value="sports">Sports</option>
+    <option value="movies">Movies</option>
+    <option value="celebrities">Celebrities</option>
+    <option value="usstates">US States</option>
+    <option value="countries">Countries</option>
+    <option value="food">Food</option>
+    <option value="questions">Questions</option>
+  </select>
+  <input placeholder=" Number of players..." id="nop">
+  <div onclick="start()" id="text">START</div>
+  <div id="gfwcontainer"><div id="gfw">Impostor gets Fake Words</div><div onclick="toggle()" id="gfwclicker"></div></div>
+  </div>
+  <div class="hidden" id="wordspage">
+    <div id="alltexts">
+      <span id="role"></span><br>
+      <span id="word"></span>
+    </div>
+  </div>
+</body>
+<style>
+  #alltexts {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+  body {
+  font-family: "Trebuchet MS";
+  }
+  #role {
+    font-size: 6vh;
+    text-align: center;
+  }
+  #word {
+    font-size: 4vh;
+  }
+  .hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+  #categories {
+    position: absolute;
+    top: 2vh;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    font-size: 2.5vh;
+    width: 18vh;
+    height: 4vh;
+    text-align: center;
+    font-family: "Trebuchet MS";
+    border: 0.5vh solid black;
+    border-radius: 1vh;
+  }
+  #nop {
+    outline: 0.5vh solid black;
+    border-radius: 0.5vh;
+    font-family: "Trebuchet MS";
+    top: 39vh;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    position: absolute;
+  }
+  #text {
+    border-radius: 1.5vh;
+    padding: 1vh;
+    outline: 1.5vh solid black;
+    font-weight: bold;
+    width: auto;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 6vh;
+    font-family: "Trebuchet MS";
+  }
+  #gfwcontainer {
+    font-family: "Trebuchet MS";
+    position: absolute;
+    top: 57.5vh;
+    width: 33.5vh;
+    height: 4vh;
+    left: 50%;
+    transform: translate(-50%, 0%);
+  }
+  #gfw {
+    left: 5vh;
+    white-space: nowrap;
+    position: absolute;
+    color: black;
+  }
+  #gfwclicker {
+    outline: 0.5vh solid black;
+    border-radius: 0.5vh;
+    width: 3vh;
+    height: 3vh;
+    left: 0;
+    top: 0;
+    position: absolute;
+  }
+</style>
 <script>
-  function givepeople() {
-    impostor = parseInt(Math.random() * parseInt(document.getElementById("input").value)) + 1;
-    words = [
-  "Taylor Swift",
-  "Dwayne Johnson",
-  "Beyoncé",
-  "Leonardo DiCaprio",
-  "Ariana Grande",
-  "Tom Holland",
-  "Zendaya",
-  "Keanu Reeves",
-  "Emma Watson",
-  "Rihanna",
-  "Chris Hemsworth",
-  "Selena Gomez",
-  "Brad Pitt",
-  "Angelina Jolie",
-  "Kylie Jenner",
-  "Kendall Jenner",
-  "Ryan Reynolds",
-  "Lady Gaga",
-  "Johnny Depp",
-  "Miley Cyrus",
-  "Robert Downey Jr.",
-  "Scarlett Johansson",
-  "Timothée Chalamet",
-  "Margot Robbie",
-  "Billie Eilish",
-  "Drake",
-  "Shakira",
-  "Ed Sheeran",
-  "Post Malone",
-  "Bruno Mars",
-  "Gigi Hadid",
-  "Zayn Malik",
-  "Doja Cat",
-  "Bad Bunny",
-  "Millie Bobby Brown",
-  "Pedro Pascal",
-  "Gal Gadot",
-  "Will Smith",
-  "Jada Pinkett Smith",
-  "Justin Bieber",
-  "Hailey Bieber",
-  "Harry Styles",
-  "Blake Lively",
-  "Nicki Minaj",
-  "Jason Momoa",
-  "Cillian Murphy",
-  "Natalie Portman",
-  "Christian Bale",
-  "Jennifer Lawrence",
-  "Daniel Radcliffe"
-];
-
-fakewords = [
-  "What are three apps people like that you don’t?",
-  "How do you think a kid would explain your job?",
-  "What’s a skill that schools teach but most people don’t use?",
-  "What’s a trend you liked at first but now think is silly?",
-  "What would you probably end up doing without internet for a week?",
-  "What’s a tip people always say but never helps you?",
-  "What do people think you do on weekends (but they’re wrong)?",
-  "What’s a tip for getting work done that didn’t work for you?",
-  "What’s something you believed when you were little that’s not true?",
-  "What’s a movie or book you thought would be good but wasn’t?",
-  "What’s a school subject that gets too much attention?",
-  "What’s a breakfast food that people like but you don’t?",
-  "What’s a gadget that costs too much for what it does?",
-  "What’s something boring that you secretly enjoy doing?",
-  "What’s a job that looks fun but is actually hard?",
-  "What’s a website you use too much and wish you didn’t?",
-  "What’s something cheap you bought that didn’t work well?",
-  "What’s a weird thing that bothers only you?",
-  "What’s something about robots or AI that worries people?",
-  "What’s one problem with buses or trains in your town?",
-  "What’s one habit that feels useful but wastes time?",
-  "What’s something you forget to do in the morning?",
-  "What’s a way of taking notes that didn’t help you?",
-  "What’s a shortcut people talk about but you never use?",
-  "What’s a way of learning that doesn’t work for you?",
-  "What’s something about school that other kids don’t notice but bugs you?",
-  "What’s a tool or app everyone loves but you don’t use?",
-  "What’s a change you made that didn’t really help much?",
-  "What’s something you like about being at school in person?",
-  "What’s the most distracting thing near your desk?",
-  "What’s something you always forget to do on your day off?",
-  "What’s a backup plan you made but never needed?",
-  "What’s something you thought didn’t exist, but it did?",
-  "What’s a way of planning your week that didn’t work for you?",
-  "What’s something people get wrong about minimalism?",
-  "What’s a habit you want to quit but still do?",
-  "What’s a news source you stopped using?",
-  "What’s a bad group project story you remember?",
-  "What’s an app you downloaded but deleted quickly?",
-  "What’s an extension or add-on you never use?",
-  "What’s something in your backpack or pocket you don’t need?",
-  "What’s one file or photo you’ve never deleted?",
-  "What’s something your favorite app added that made it worse?",
-  "What’s a shortcut key you’ve never learned?",
-  "What’s a sign that you’re feeling too tired or stressed?",
-  "What’s a break that usually makes you more tired instead of rested?",
-  "What’s a tip that sounded smart but didn’t help at all?",
-  "What’s a snack you used to love but now don’t eat anymore?",
-  "What’s a class or lesson that didn’t help you much?",
-  "What’s a routine that works for other people but not for you?"
-];
-
-randomNum = parseInt(Math.random() * 50);
-    codeword = words[randomNum];
-    falseword = fakewords[randomNum];
-    for (i = 1; i < parseInt(document.getElementById("input").value) + 1; i++) {
-      if (impostor == i) {
-        message = "impostor";
-        document.getElementById("body").style.backgroundColor = "tomato";
-        cw = "";
-      } else {
-        message = "innocent";
-        document.getElementById("body").style.backgroundColor = "MediumSeaGreen";
-        cw = codeword;
+  function start() {
+    if (parseInt(document.getElementById("nop").value) > 0) {
+    document.getElementById("startpage").classList.add("hidden");
+    document.getElementById("wordspage").classList.remove("hidden");
+    impostor = Math.floor(Math.random() * parseInt(document.getElementById("nop").value));
+    word = Math.floor(Math.random() * window[document.getElementById("categories").value].length);
+    fakeword = Math.floor(Math.random() * window[document.getElementById("categories").value].length);
+    while (fakeword == word) {
+      fakeword = Math.floor(Math.random() * window[document.getElementById("categories").value].length);
+    }
+    for (i = 0; i < parseInt(document.getElementById("nop").value); i++) {
+      setTimeout(function(num) {
+        if (gfwc == 0 || document.getElementById("categories").value == "questions") {
+        if (num == impostor) {
+        document.getElementById("role").innerHTML = "IMPOSTOR";
+        document.getElementById("role").style.color = "red";
+        } else {
+        document.getElementById("role").innerHTML = "INNOCENT";
+        document.getElementById("role").style.color = "green";
+        }
+        } else {
+          document.getElementById("role").innerHTML = "";
+        }
+        if (gfwc == 1 && num == impostor && document.getElementById("categories").value == "questions") {
+          document.getElementById("word").innerHTML = fakequestions[word];
+        } else if (gfwc == 1 && num == impostor) {
+          document.getElementById("word").innerHTML = window[document.getElementById("categories").value][fakeword];
+        } else if (num != impostor) {
+          document.getElementById("word").innerHTML = window[document.getElementById("categories").value][word];
+        } else {}
+        setTimeout(function() {
+          document.getElementById("role").style.color = "black";
+          document.getElementById("role").innerHTML = "Pass the phone!";
+          document.getElementById("word").innerHTML = "";
+        }, 5000)
+      }, i * 8000, i);
+    }
+    setTimeout(function() {
+      if (document.getElementById("categories").value == "questions") {
+      document.getElementById("alltexts").setAttribute("onclick", "revealquestion()");
+      document.getElementById("role").innerHTML = "Click Here to Reveal the Question";
       }
-      setTimeout(fridge, (i - 1) * 7500, i, cw, message);
+    }, parseInt(document.getElementById("nop").value) * 8000);
     }
   }
-  setTimeout(function() {
-    document.getElementById("i").innerHTML = "";
-    document.getElementById("codeword").innerHTML = codeword;
-            document.getElementById("body").style.backgroundColor = "white";
-  }, 5000 + parseInt(document.getElementById("input").value) * 12000);
-  function fridge(gg, cw2, message2) {
-        document.getElementById("i").innerHTML = "player ".concat(gg.toString(), " is ", message2);
-        document.getElementById("codeword").innerHTML = cw2;
-        setTimeout(function() {
-        document.getElementById("i").innerHTML = "";
-        document.getElementById("codeword").innerHTML = "";
-        document.getElementById("body").style.backgroundColor = "white";
-        if (i == parseInt(document.getElementById("input").value)) {
-                document.getElementById("codeword").innerHTML = codeword;
-        }
-        }, 5000);
+  function revealquestion() {
+    document.getElementById("role").innerHTML = questions[word];
   }
+  gfwc = 0;
+  function toggle() {
+    if (gfwc == 0) {
+      gfwc = 1;
+      document.getElementById("gfwclicker").style.backgroundColor = "black";
+    } else {
+      gfwc = 0;
+      document.getElementById("gfwclicker").style.backgroundColor = "white";
+    }
+  }
+  animals = [
+  // Mammals (35)
+  "Elephant", "Tiger", "Lion", "Giraffe", "Zebra",
+  "Kangaroo", "Panda", "Koala", "Sloth", "Chimpanzee",
+  "Gorilla", "Rhinoceros", "Hippopotamus", "Bison", "Grizzly Bear",
+  "Polar Bear", "Moose", "Deer", "Wolf", "Fox",
+  "Raccoon", "Otter", "Armadillo", "Hedgehog", "Bat",
+  "Whale", "Dolphin", "Seal", "Walrus", "Rabbit",
+  "Mouse", "Squirrel", "Camel", "Horse", "Dog",
+
+  // Reptiles (15)
+  "Crocodile", "Alligator", "Komodo Dragon", "Iguana", "Chameleon",
+  "Gecko", "Boa Constrictor", "Python", "Cobra", "Rattlesnake",
+  "Tortoise", "Sea Turtle", "Monitor Lizard", "Garter Snake", "Box Turtle",
+
+  // Amphibians (10)
+  "Bullfrog", "Tree Frog", "Poison Dart Frog", "Axolotl", "Salamander",
+  "Newt", "Toad", "Glass Frog", "Caecilian", "Fire-bellied Toad",
+
+  // Birds (40)
+  "Eagle", "Hawk", "Falcon", "Owl", "Vulture",
+  "Parrot", "Macaw", "Cockatoo", "Budgie", "Toucan",
+  "Penguin", "Emu", "Ostrich", "Kiwi", "Cassowary",
+  "Duck", "Goose", "Swan", "Flamingo", "Heron",
+  "Egret", "Pelican", "Seagull", "Albatross", "Cormorant",
+  "Puffin", "Peacock", "Turkey", "Chicken", "Rooster",
+  "Dove", "Pigeon", "Canary", "Sparrow", "Robin",
+  "Blue Jay", "Crow", "Magpie", "Woodpecker", "Hummingbird"
+];
+  celebrities = [
+  "Taylor Swift", "Dwayne Johnson", "Beyoncé", "Leonardo DiCaprio", "Oprah Winfrey",
+  "Brad Pitt", "Angelina Jolie", "Tom Hanks", "Ariana Grande", "Rihanna",
+  "Selena Gomez", "Justin Bieber", "Chris Hemsworth", "Emma Watson", "Robert Downey Jr.",
+  "Scarlett Johansson", "Kanye West", "Kim Kardashian", "Jennifer Aniston", "Johnny Depp",
+  "Lady Gaga", "Will Smith", "Zendaya", "Ryan Reynolds", "Natalie Portman",
+  "Billie Eilish", "Keanu Reeves", "Drake", "Kylie Jenner", "Miley Cyrus",
+  "Chris Evans", "Shakira", "Tom Holland", "Vin Diesel", "Morgan Freeman",
+  "Gal Gadot", "Jason Momoa", "Snoop Dogg", "Lizzo", "Nicki Minaj",
+  "Ed Sheeran", "Adele", "Harry Styles", "Cardi B", "Post Malone",
+  "Jennifer Lopez", "Blake Lively", "Bruno Mars", "Samuel L. Jackson", "Chris Pratt",
+  "Ben Affleck", "Matt Damon", "Jake Gyllenhaal", "Anne Hathaway", "Emma Stone",
+  "Mark Wahlberg", "Pete Davidson", "Millie Bobby Brown", "Steve Carell", "Doja Cat",
+  "Stephen Colbert", "Jimmy Fallon", "James Corden", "Trevor Noah", "Conan O’Brien",
+  "Gordon Ramsay", "Simon Cowell", "Reese Witherspoon", "Tina Fey", "Amy Poehler",
+  "Michael B. Jordan", "Zendaya", "Christian Bale", "Hugh Jackman", "Margot Robbie",
+  "Daniel Radcliffe", "RuPaul", "Kris Jenner", "Lana Del Rey", "Florence Pugh",
+  "Timothée Chalamet", "Dua Lipa", "Bella Hadid", "Gigi Hadid", "Sarah Jessica Parker",
+  "Matthew McConaughey", "Nina Dobrev", "Jared Leto", "Elon Musk", "Barack Obama",
+  "Michelle Obama", "Prince Harry", "Meghan Markle", "David Beckham", "Victoria Beckham",
+  "Tyra Banks", "Paris Hilton", "Zac Efron", "Seth Rogen", "John Krasinski",
+  "Emily Blunt", "Bryan Cranston", "Aaron Paul", "Kaley Cuoco", "Neil Patrick Harris"
+];
+  movies = [
+  // Action & Adventure (15)
+  "Die Hard", "Mad Max: Fury Road", "John Wick", "Gladiator", "The Dark Knight",
+  "Inception", "The Matrix", "Terminator 2: Judgment Day", "Top Gun", "Casino Royale",
+  "The Bourne Identity", "Mission: Impossible – Fallout", "Speed", "Taken", "Skyfall",
+
+  // Science Fiction & Fantasy (15)
+  "Star Wars: A New Hope", "The Empire Strikes Back", "Return of the Jedi", "Dune (2021)", "Interstellar",
+  "Avatar", "Blade Runner", "Back to the Future", "Guardians of the Galaxy", "Doctor Strange",
+  "The Fifth Element", "District 9", "The Hunger Games", "The Lord of the Rings: The Fellowship of the Ring", "Pan’s Labyrinth",
+
+  // Superhero (15)
+  "Avengers: Endgame", "Avengers: Infinity War", "Iron Man", "Black Panther", "Spider-Man: No Way Home",
+  "The Batman", "Man of Steel", "Wonder Woman", "Thor: Ragnarok", "Deadpool",
+  "Captain America: The Winter Soldier", "Logan", "X-Men: Days of Future Past", "Shazam!", "The Suicide Squad",
+
+  // Animation (Family & Adult) (15)
+  "Toy Story", "Finding Nemo", "Shrek", "The Lion King", "Up",
+  "Frozen", "Moana", "Zootopia", "Inside Out", "Coco",
+  "Ratatouille", "Kung Fu Panda", "The Incredibles", "Wall-E", "Despicable Me",
+
+  // Comedy (15)
+  "Superbad", "Anchorman", "Bridesmaids", "The Hangover", "Ferris Bueller’s Day Off",
+  "Groundhog Day", "Napoleon Dynamite", "Dumb and Dumber", "Mean Girls", "Step Brothers",
+  "Elf", "The 40-Year-Old Virgin", "Tropic Thunder", "School of Rock", "Office Space",
+
+  // Horror & Thriller (10)
+  "Get Out", "The Shining", "A Quiet Place", "Hereditary", "It",
+  "The Exorcist", "Halloween", "Scream", "The Ring", "Psycho",
+
+  // Drama (10)
+  "Forrest Gump", "The Shawshank Redemption", "The Godfather", "Fight Club", "The Social Network",
+  "American Beauty", "The Green Mile", "A Beautiful Mind", "12 Years a Slave", "The Pursuit of Happyness",
+
+  // Romance (5)
+  "Titanic", "The Notebook", "Pride and Prejudice", "La La Land", "Before Sunrise"
+];
+  usstates = [
+  "Alabama", "Alaska", "Arizona", "Arkansas", "California",
+  "Colorado", "Connecticut", "Delaware", "Florida", "Georgia",
+  "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
+  "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland",
+  "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri",
+  "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey",
+  "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
+  "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
+  "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
+  "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+];
+  countries = [
+  "United States", "Canada", "Mexico", "Brazil", "Argentina",
+  "Colombia", "Chile", "Peru", "Venezuela", "Ecuador",
+  "United Kingdom", "France", "Germany", "Italy", "Spain",
+  "Netherlands", "Belgium", "Sweden", "Norway", "Denmark",
+  "Switzerland", "Austria", "Ireland", "Portugal", "Greece",
+  "Russia", "Ukraine", "Poland", "Czech Republic", "Hungary",
+  "China", "Japan", "South Korea", "India", "Pakistan",
+  "Bangladesh", "Vietnam", "Thailand", "Malaysia", "Philippines",
+  "Indonesia", "Singapore", "Sri Lanka", "Nepal", "Kazakhstan",
+  "Turkey", "Saudi Arabia", "United Arab Emirates", "Israel", "Iran",
+  "Iraq", "Jordan", "Qatar", "Kuwait", "Oman",
+  "Egypt", "South Africa", "Nigeria", "Kenya", "Ethiopia",
+  "Ghana", "Morocco", "Algeria", "Tunisia", "Tanzania",
+  "Uganda", "Zimbabwe", "Zambia", "Sudan", "Angola",
+  "Australia", "New Zealand", "Fiji", "Papua New Guinea", "Samoa",
+  "South Sudan", "Democratic Republic of the Congo", "Ivory Coast", "Senegal", "Rwanda",
+  "Libya", "Cameroon", "Mozambique", "Namibia", "Botswana",
+  "Panama", "Costa Rica", "Guatemala", "Honduras", "El Salvador",
+  "Cuba", "Haiti", "Dominican Republic", "Jamaica", "Trinidad and Tobago",
+  "Bahamas", "Iceland", "Luxembourg", "Monaco", "Liechtenstein"
+];
+  foods = [
+  "Apple", "Banana", "Orange", "Strawberry", "Blueberry",
+  "Watermelon", "Pineapple", "Grapes", "Mango", "Peach",
+  "Carrot", "Broccoli", "Spinach", "Lettuce", "Tomato",
+  "Potato", "Sweet Potato", "Corn", "Peas", "Zucchini",
+  "Chicken", "Beef", "Pork", "Lamb", "Turkey",
+  "Salmon", "Tuna", "Shrimp", "Crab", "Lobster",
+  "Eggs", "Milk", "Cheese", "Yogurt", "Butter",
+  "Bread", "Bagel", "Croissant", "Pita", "Tortilla",
+  "Rice", "Pasta", "Spaghetti", "Lasagna", "Noodles",
+  "Pizza", "Burger", "Hot Dog", "Taco", "Burrito",
+  "Sushi", "Ramen", "Pho", "Curry", "Dumplings",
+  "Spring Roll", "Quesadilla", "Falafel", "Shawarma", "Gyro",
+  "Steak", "Meatballs", "Fried Chicken", "BBQ Ribs", "Chili",
+  "Pancakes", "Waffles", "French Toast", "Cereal", "Granola",
+  "Ice Cream", "Cake", "Cookies", "Brownies", "Cupcake",
+  "Pie", "Donut", "Muffin", "Pudding", "Jelly",
+  "Popcorn", "Chips", "Pretzels", "Crackers", "Trail Mix",
+  "Nuts", "Almonds", "Peanuts", "Cashews", "Walnuts",
+  "Avocado", "Coconut", "Beets", "Kale", "Mushrooms",
+  "Pickles", "Hummus", "Guacamole", "Salsa", "Coleslaw"
+];
+  sports = [
+  "Soccer", "Basketball", "Baseball", "American Football", "Tennis",
+  "Golf", "Hockey", "Volleyball", "Cricket", "Rugby",
+  "Table Tennis", "Badminton", "Boxing", "Mixed Martial Arts", "Wrestling",
+  "Swimming", "Diving", "Track and Field", "Gymnastics", "Skateboarding",
+  "Surfing", "Snowboarding", "Skiing", "Ice Skating", "Speed Skating",
+  "Cycling", "Mountain Biking", "BMX", "Equestrian", "Fencing",
+  "Rowing", "Canoeing", "Kayaking", "Sailing", "Archery",
+  "Shooting", "Handball", "Lacrosse", "Squash", "Racquetball",
+  "Climbing", "Triathlon", "Pole Vault", "High Jump", "Javelin",
+  "Shot Put", "Discus", "Powerlifting", "Bodybuilding", "Cheerleading"
+];
+  questions = [
+  "What is a good age to get married?",
+  "How many hours of sleep do you usually need?",
+  "How much money would you need to retire comfortably?",
+  "What’s your ideal number of kids?",
+  "What’s the highest number you’ve ever counted to?",
+  "At what age did you feel like an adult?",
+  "What age do you want to live until?",
+  "What year was your favorite movie released?",
+  "How many books do you read in a year?",
+  "What’s your least favorite childhood memory?",
+  "What items are always in your backpack?",
+  "At what age should someone move out of their parents' house?",
+  "How many pets would be too many?",
+  "What’s your favorite number and why?",
+  "How many siblings is the ideal amount?",
+  "What objects are always on your desk or workspace?",
+  "How many close friends do you really need?",
+  "How many text messages do you send a day?",
+  "What’s the most you’d pay for a concert ticket?",
+  "What is the most amount of money you've ever spent at once?",
+  "What snacks do you always grab at the store?",
+  "How many cups of coffee do you drink in a week?",
+  "How many times a day do you check your phone?",
+  "How long should a good vacation last?",
+  "What tools or gear would you bring to survive in the wild?",
+  "How many hours should school last each day?",
+  "What’s your least favorite age you’ve lived through so far?",
+  "What’s the longest you’ve ever gone without sleep?",
+  "What games have you played more than 100 hours?",
+  "How many times do you brush your teeth a day?",
+  "What’s the best number of people for a gaming squad?",
+  "What items do you always take on a trip?",
+  "How long should a good movie be?",
+  "How many songs are on your favorite playlist?",
+  "How many steps do you walk per day (on average)?",
+  "What gear would you need for your dream job?",
+  "How many hours a week should people work ideally?",
+  "How many unread emails do you have right now?",
+  "What items would you want if stranded on a desert island?",
+  "How many chores should a kid have per day?",
+  "How old is too old to live with roommates?",
+  "What’s the biggest age difference you’d accept in a relationship?",
+  "How many streaming services do you currently pay for?",
+  "How many outfits do you try on before picking one?",
+  "How many times have you changed your mind today?",
+  "How many hobbies do you actually maintain?",
+  "What’s the most hours you've spent on a game in one sitting?",
+  "What items are essential for your gaming setup?",
+  "How much would someone have to pay you to shave your head?",
+  "How long does it take you to fall asleep on average?",
+  "What objects do you always lose?",
+  "How many songs can you sing from memory?",
+  "How many teachers do you actually remember fondly?",
+  "How many tabs do you usually have open?",
+  "How long should a perfect nap be?",
+  "How old were you when you had your first crush?",
+  "What apps do you use every single day?",
+  "How many alarms do you set in the morning?",
+  "How much money would it take for you to move to a new country?",
+  "What was the worst grade you ever got on a test?",
+  "How many photos are in your camera roll right now?",
+  "What’s the earliest memory you can recall?",
+  "How many cities have you lived in?",
+  "How many years do you want to work before retiring?",
+  "How many times have you watched your favorite movie?",
+  "How many pairs of shoes do you own?",
+  "What goals are currently on your mind?",
+  "What age would you go back to for a day?",
+  "How much money would you give to charity if you won the lottery?",
+  "How long do you usually spend getting ready?",
+  "How many minutes late is still considered “on time” to you?",
+  "What apps do you regret downloading?",
+  "What’s the highest number you’ve memorized?",
+  "How many times do you laugh on an average day?",
+  "What things waste most of your time?",
+  "What foods are you always down to eat?",
+  "How long would you survive in the wild?",
+  "What brands do you buy without even thinking?",
+  "What’s the lowest grade you’ve ever accepted happily?",
+  "What gadgets do you use every single week?",
+  "How many people have your phone number?",
+  "How long would you last in a zombie apocalypse?",
+  "What objects in your room mean the most to you?",
+  "What’s the average number of thoughts you think you have per minute?",
+  "How many birthdays do you actually remember each year?",
+  "What skills would you want to master if time wasn’t a problem?",
+  "How long can you go without checking your phone?",
+  "How long could you stay silent on purpose?",
+  "What items would be in your dream backpack?",
+  "How many trophies or medals have you won in life?",
+  "How many foods do you actually like from your childhood?",
+  "How many hours of video games per week is ideal?",
+  "What’s the most expensive thing you own?",
+  "What YouTube channels do you watch the most?",
+  "How many ideas do you get per day on average?",
+  "What’s the longest you've ever gone without using the internet?",
+  "How many sports have you tried?",
+  "How many meals a day is ideal?",
+  "What’s the biggest number you can write from memory?",
+  "How many things are currently in your backpack or bag?",
+  "How many passwords do you remember by heart?",
+  "What hobbies would you start if you had unlimited time?",
+  "How many different phones have you owned?",
+  "How many different haircuts have you had?"
+];
+  fakequestions = [
+  "Pick an age between 20 and 40.",
+  "Choose a number of hours between 4 and 10.",
+  "Pick a number from 50K to 1 million.",
+  "Pick a number from 0 to 10.",
+  "What's a number you think is fun to count to?",
+  "Pick an age where people look mature.",
+  "Choose any age over 60.",
+  "Pick a number from 1990 to 2025.",
+  "Pick a number between 0 and 100.",
+  "What’s a weird memory from your early life?",
+  "Name 3 things someone might keep in a bag.",
+  "Pick a random age someone moves out.",
+  "Guess how many pets someone can handle.",
+  "Pick a number between 1 and 99.",
+  "Pick a number that feels 'normal' for siblings.",
+  "Name 3 things usually found on a desk.",
+  "Pick a number under 20.",
+  "Pick a number of messages per day.",
+  "Choose a dollar amount under $1,000.",
+  "Guess a big number someone might spend at once.",
+  "Name 2 popular snack foods.",
+  "Pick a number of coffees someone might drink.",
+  "Pick a number of phone checks per day.",
+  "Choose a number of vacation days.",
+  "Name 3 survival tools.",
+  "Pick a school day length in hours.",
+  "Choose the worst number from 1 to 18.",
+  "Pick a number of hours without sleep.",
+  "Name a game someone might play for 100+ hours.",
+  "Pick a tooth brushing count.",
+  "Pick a group size from 2 to 10.",
+  "Name 2 things to pack for vacation.",
+  "Pick a runtime for a movie.",
+  "Pick a playlist length.",
+  "Guess someone's daily step count.",
+  "List 2 tools for a dream job.",
+  "Pick a weekly work hour count.",
+  "Guess how many unread messages someone might have.",
+  "Name 3 survival items.",
+  "Pick a number of daily chores.",
+  "Pick a roommate cut-off age.",
+  "Pick an acceptable age gap.",
+  "Pick a number of subscriptions someone might have.",
+  "Guess how many outfits people try on.",
+  "Pick a number from 1 to 10.",
+  "Guess a number of hobbies.",
+  "Pick a gaming session time in hours.",
+  "List 3 parts of a gaming setup.",
+  "Pick a money amount for shaving your head.",
+  "Pick a number of minutes to fall asleep.",
+  "Name 2 things people always lose.",
+  "Name 2 songs you hear all the time.",
+  "Pick a number of teachers remembered.",
+  "Guess how many tabs are open.",
+  "Choose a nap length.",
+  "Pick a random age for a first crush.",
+  "Name 3 apps on your phone.",
+  "Pick a number of alarms.",
+  "Pick a dollar amount for moving away.",
+  "Pick a test score under 100.",
+  "Pick a range of photo count from your gallery.",
+  "Pick an early number under age 10.",
+  "Pick a number of cities.",
+  "Guess years until retirement.",
+  "Pick a number of re-watches.",
+  "Pick a shoe count.",
+  "Name 2 goals someone might have.",
+  "Pick an age you'd time travel to.",
+  "Pick a donation percentage.",
+  "Guess a morning routine time.",
+  "How late is still “on time”?",
+  "Name 2 apps you never use.",
+  "Pick a number someone might memorize.",
+  "Pick a laugh count per day.",
+  "Name 3 time-wasting things.",
+  "Name 2 foods most people like.",
+  "Name 2 brand names people love.",
+  "Pick a test grade someone wouldn’t care about.",
+  "Name 3 common gadgets.",
+  "Pick a number of phone contacts.",
+  "Pick a number of days to survive zombies.",
+  "Name 2 important room items.",
+  "Guess how many thoughts per minute.",
+  "How many birthdays are hard to forget?",
+  "Name 2 skills you’d like.",
+  "Pick a number of minutes without your phone.",
+  "Guess how long someone could stay quiet.",
+  "Name 3 backpack essentials.",
+  "Pick a trophy count.",
+  "Name 2 childhood meals.",
+  "Pick a weekly gaming hour count.",
+  "Name a high-value object.",
+  "Name 3 YouTube channel topics.",
+  "Guess a number of ideas per day.",
+  "Pick a number of days offline.",
+  "List 3 sports people try.",
+  "Guess how many meals are normal.",
+  "Write a giant number from memory.",
+  "Guess how many items someone carries daily.",
+  "Pick a number of passwords.",
+  "Name 2 new hobbies to try.",
+  "Pick a phone count you've owned.",
+  "Pick a haircut count over your life."
+];
 </script>
